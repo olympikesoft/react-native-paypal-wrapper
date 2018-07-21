@@ -41,6 +41,15 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
   private static final String ERROR_USER_CANCELLED = "USER_CANCELLED";
   private static final String ERROR_INVALID_CONFIG = "INVALID_CONFIG";
   private static final String ERROR_INTERNAL_ERROR = "INTERNAL_ERROR";
+  
+  private static final String ERROR_NO_CLIENTID = "the 'clientId' parameter is required";
+  private static final String ERROR_NO_ENVIRONMENT = "the 'environment' parameter is required";
+  private static final String ERROR_INVALID_ENVIRONMENT = "the 'environment' parameter is invalid";
+  private static final String ERROR_NO_PRODUCTNAME = "the 'productName' parameter is required";
+  private static final String ERROR_NO_CURRENCY = "the 'currency' parameter is required";
+  private static final String ERROR_NO_VALUE = "the 'value' parameter is required";
+  private static final String ERROR_NO_MODE = "the 'mode' parameter is required";
+  private static final String ERROR_INVALID_MODE = "the 'mode' parameter is invalid";
 
   private Promise promise;
   private PayPalConfiguration config;
@@ -157,7 +166,9 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
     this.promise = promise;
 
     String price = params.getString("price");
+    String quantity = params.getString("quantity");
     String currency = params.getString("currency");
+    String name = params.getString("name");
     String description = params.getString("description");
 
     PayPalPayment payment =
@@ -165,6 +176,8 @@ public class RNPaypalWrapperModule extends ReactContextBaseJavaModule implements
         new BigDecimal(price),
         currency,
         description,
+        name,
+        new BigDecimal(quantity),
         PayPalPayment.PAYMENT_INTENT_SALE
       );
 
